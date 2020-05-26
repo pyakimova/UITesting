@@ -1,54 +1,53 @@
 package steps;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.WebDriverRunner;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.WebDriver;
 import pageobjects.VacancyPage;
 
-import java.util.List;
-
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.url;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
+
 
 public class MyStepdefs
 {
-
+    WebDriver driver = WebDriverRunner.getWebDriver();
     VacancyPage vacancyPage = page(VacancyPage.class);
 
-    @Given("^open site bcs$")
-    public void openBCSVacancyRu()
+    @Given("^open site \"([^\"]*)\"$")
+    public void openBCSVacancyRu(String url)
     {
-        open("https://bcs.ru/vacancy/novosibirsk");
+        open("http://www.google.com");
+        driver.navigate().to(url);
     }
 
-    @And("^wait link QA микросервисов appears$")
-    public void waitUntilVacancyAppears()
+    @And("^wait link QA микросервисов$")
+    public void waitUntilVacancyVisible()
     {
-        vacancyPage.vacancy.waitUntil(Condition.appears, 7000);
+       vacancyPage.QAvacancy.waitUntil(Condition.appears, 1000);
     }
 
     @When("^click link QA микросервисов$")
     public void clickVacancy()
     {
-        vacancyPage.vacancy.click();
+
+        vacancyPage.QAvacancy.click();
     }
 
-    @And("^wait until duties appears$")
+    @And("^wait duties appears$")
     public void waitUntilDutiesAppears()
     {
-        vacancyPage.duties.waitUntil(Condition.appears, 7000);
+        vacancyPage.QAduties.waitUntil(Condition.appears, 5);
     }
 
-    @Then("^check duties exactly$")
-    public void checkDuties()
+    @Then("^check duties amount \"([^\"]*)\"$")
+    public void checkDutiesAmount(String expectedAmount)
     {
-
+        String amount = vacancyPage.QAduties.attr("childElementCount");
+        assert amount.equals(expectedAmount);
     }
 }
 

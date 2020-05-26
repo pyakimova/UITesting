@@ -1,9 +1,9 @@
 @bcstest
-Feature: check vacancy duties
+Feature: check QA vacancy duties amount
 
   Scenario:
-    Given open site bcs
-    And wait link QA микросервисов appears
+    Given open site "https://bcs.ru/vacancy/novosibirsk"
+    And wait link QA микросервисов
     When click link QA микросервисов
-    And wait until duties appears
-    Then check duties exactly
+    And wait duties appears
+    Then check duties amount "7"

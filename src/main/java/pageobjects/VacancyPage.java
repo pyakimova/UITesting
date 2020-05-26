@@ -7,11 +7,14 @@ import static org.openqa.selenium.By.xpath;
 public class VacancyPage  extends AbstractPage
 {
     @NameOfElement("QA микросервисов")
-    @FindBy(xpath = "\".//*[contains(text(),'QA микросервисов')]\"")
-    public SelenideElement vacancy;
+    @FindBy(xpath = "//a[text()[contains(.,'QA микросервисов')]]")
+    public SelenideElement QAvacancy;
 
     @NameOfElement("Должностные обязанности")
-    @FindBy(xpath = "\".//*[contains(text(),'Должностные обязанности')]\"")
-    public SelenideElement duties;
+    @FindBy(xpath =
+            "//a[text()[contains(.,'QA микросервисов')]]"
+                    + "/parent::li/child::div/child::h3[text()='Должностные обязанности:']"
+                    + "/following-sibling::*[1]")
+    public SelenideElement QAduties;
 
 }
